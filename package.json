@@ -1,6 +1,6 @@
 {
   "name": "@sphereon/did-auth-siop",
-  "version": "0.1.2-UNSTABLE",
+  "version": "0.1.2",
   "main": "dist/main/index.js",
   "types": "dist/main/index.d.ts",
   "license": "Apache-2.0",
@@ -14,15 +14,16 @@
     "test": "run-s build test:*",
     "test:lint": "eslint . --ext .ts",
     "test:prettier": "prettier \"{src, test}/**/*.ts\" --list-different",
-    "test:cov": "jest --ci --coverage && codecov"
+    "test:cov": "jest --ci --coverage && codecov",
+    "publish-snapshot": "npm-snapshot --timestamp && npm publish --@sphereon:registry=https://nexus.qa.sphereon.com/repository/sphereon-private-npm && npm-snapshot --revert"
   },
   "engines": {
     "node": ">=10"
   },
   "dependencies": {
     "@sphereon/did-uni-client": "^0.2.0",
-    "@sphereon/pe-js": "^0.2.3",
-    "@sphereon/pe-models": "^0.0.5",
+    "@sphereon/pe-js": "0.2.4",
+    "@sphereon/pe-models": "0.0.5",
     "@transmute/did-key-ed25519": "^0.2.1-unstable.42",
     "bs58": "^4.0.1",
     "cross-fetch": "^3.1.4",
@@ -41,6 +42,8 @@
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "codecov": "^3.8.3",
+    "cross-env": "^7.0.3",
+    "cross-var": "^1.1.0",
     "cspell": "^5.9.1",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
