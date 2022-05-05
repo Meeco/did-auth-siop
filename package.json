@@ -25,6 +25,7 @@
     "node": ">=10"
   },
   "dependencies": {
+    "@hashgraph/did-sdk-js": "github:Meeco/did-sdk-js#ff914da5377fc69d8d9d292232a1aba04f1ba74c",
     "@sphereon/did-uni-client": "^0.4.0",
     "@sphereon/pex": "^1.0.2",
     "@sphereon/pex-models": "^1.1.0",
