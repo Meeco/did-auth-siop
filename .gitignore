@@ -3,7 +3,6 @@
 *.iml
 .nyc_output
 build
-dist
 node_modules
 coverage
 *.log
