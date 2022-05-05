@@ -13,12 +13,12 @@ import { bytesToBase64url, parseKey, stringToBytes } from '../util'
  *  const signature: string = await sign(data)
  *  ```
  *
- *  @param    {String}    secretKey   a 64 byte secret key as `Uint8Array` or encoded as `base64`, `base58`, or `hex` string
+ *  @param    {String}    secretKey   a 32 or 64 byte secret key as `Uint8Array` or encoded as `base64`, `base58`, or `hex` string
  *  @return   {Function}              a configured signer function `(data: string | Uint8Array): Promise<string>`
  */
 export function EdDSASigner(secretKey: string | Uint8Array): Signer {
     const privateKeyBytes: Uint8Array = parseKey(secretKey)
-    if (privateKeyBytes.length !== 64) {
+    if (privateKeyBytes.length !== 64 && privateKeyBytes.length !== 32) {
         throw new Error(`bad_key: Invalid private key format. Expecting 64 bytes, but got ${privateKeyBytes.length}`)
     }
     return async (data: string | Uint8Array): Promise<string> => {
