@@ -17,27 +17,11 @@ async function main() {
     didKey: 'did:key:z6MkicfnX9jNJB7whQJoMeqwgYmLerKphQDwwtTzRBf4KCVQ#z6MkicfnX9jNJB7whQJoMeqwgYmLerKphQDwwtTzRBf4KCVQ',
   };
   const rp = RP.builder()
-    .redirect('localhost:4200/home.html')
+    .redirect('http://localhost:4200/siop/callback')
     .requestBy(SIOP.PassBy.VALUE)
     .internalSignature(rpKeys.hexPrivateKey, rpKeys.did, rpKeys.didKey)
     .addDidMethod('key')
     .registrationBy(SIOP.PassBy.VALUE)
-    .addPresentationDefinitionClaim({
-      definition: {
-        id: '9a809146-4ea5-4bd4-bcd8-4e6c28c347af',
-        input_descriptors: [
-          {
-            id: '8d78910f-d5b5-4db5-81fe-44dfabd5559a',
-            schema: [
-              {
-                uri: 'https://did.itsourweb.org:3000/smartcredential/Ontario-Health-Insurance-Plan',
-              },
-            ],
-          },
-        ],
-      },
-      location: SIOP.PresentationLocation.VP_TOKEN, // Toplevel vp_token response expected. This also can be ID_TOKEN
-    })
     .build();
 
   const reqURI = await rp.createAuthenticationRequest();
@@ -64,7 +48,11 @@ async function main() {
   //const verifiedReq = op.verifyAuthenticationRequest(reqURI.encodedUri);  // When an HTTP endpoint is used this would be the uri found in the body
   const verifiedReq = await op.verifyAuthenticationRequest(parsedJWT); // If we have parsed the URI using the above optional parsing
 
-  console.log(`RP DID: ${verifiedReq.issuer}`);
+  const authRespWithJWT = await op.createAuthenticationResponse(verifiedReq);
+
+  const response = await op.submitAuthenticationResponse(authRespWithJWT);
+
+  console.log(response);
 }
 
 main();
