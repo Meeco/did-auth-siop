@@ -3,7 +3,7 @@ import { verify } from '@stablelib/ed25519'
 import type { VerificationMethod } from 'did-resolver'
 import { hexToBytes, base58ToBytes, base64ToBytes, bytesToHex, EcdsaSignature, stringToBytes } from './util'
 import {sha256, toEthereumAddress} from "./Digest";
-import { Hashing } from "@hashgraph/did-sdk-js";
+
 
 
 const secp256k1 = new EC('secp256k1')
@@ -29,7 +29,7 @@ interface LegacyVerificationMethod extends VerificationMethod {
 
 function extractPublicKeyBytes(pk: VerificationMethod): Uint8Array {
     if (pk.publicKeyMultibase) {
-        return Hashing.multibase.decode(pk.publicKeyMultibase)
+        return base58ToBytes(pk.publicKeyBase58)
     } else 
     if (pk.publicKeyBase58) {
         return base58ToBytes(pk.publicKeyBase58)
